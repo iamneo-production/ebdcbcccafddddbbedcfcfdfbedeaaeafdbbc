@@ -18,5 +18,5 @@ const Card = ({key, question, correctAnswerMarkUpdate, attempt, options, answer}
         <Button onClick = {disableBtn} disabled = {state}> {options.option4} </Button>
         </div>
     )
-
 }
+export default Card;
