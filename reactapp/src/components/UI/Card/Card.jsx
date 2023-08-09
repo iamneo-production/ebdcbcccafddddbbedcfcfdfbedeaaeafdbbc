@@ -5,10 +5,11 @@ const Card = (props) => {
   const ans = props.answer;
   const [disabled, setDisabled] = useState(false);
 
-  const check = (selectedOption) => {
+  const check = (a) => {
     setDisabled(true);
-    props.correctAnswerMarkUpdate(selectedOption === ans);
-    props.attempt(selectedOption);
+    if (a === ans) {
+      props.attempt(true);
+    }
   };
 
   return (
