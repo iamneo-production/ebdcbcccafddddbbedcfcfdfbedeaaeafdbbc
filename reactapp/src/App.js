@@ -1,89 +1,124 @@
-import { useState } from "react";
-import "./App.css";
-import Banner from "./components/UI/Banner/Banner";
+
+import { useState } from 'react';
+import './App.css';
 import Button from "./components/UI/Button/Button";
 import Card from "./components/UI/Card/Card";
-import questions from "./Data/data";
-
+import React from 'react';
 function App() {
-  const [start, setStart] = useState(false);
-  const [end, setEnd] = useState(false);
+
+  var qCards;
+  var startBtn;
+  var resultBtn;
+
+  const questionData = [
+    {
+      key:1,
+      question:'Who is the father of the nation ?',
+      //correctAnswerMarkUpdate,
+      //attempt,
+      options : {
+        option1: 'Mahatma Gandhi',
+        option2: 'Jawaharlal Nehru',
+        option3: 'Donald Trump',
+        option4: 'Barrack Obama'
+      },
+      answer : 'Mahatma Gandhi'
+    },
+    {
+      key : 2,
+      question : "What color is are the leaves ?",
+      //correctAnswerMarkUpdate,
+      //attempt,
+      options : {
+        option1 : "Blue",
+        option2 : "Red",
+        option3 : "Yellow",
+        option4 : "Green",
+      },
+      answer : "Green"
+    },
+    {
+      key:3,
+      question:'Who is the father of the nation ?',
+      //correctAnswerMarkUpdate,
+      //attempt,
+      options : {
+        option1: 'Mahatma Gandhi',
+        option2: 'Jawaharlal Nehru',
+        option3: 'Donald Trump',
+        option4: 'Barrack Obama'
+      },
+      answer : 'Mahatma Gandhi'
+    },
+    {
+      key:4,
+      question:'Who is the father of the nation ?',
+      //correctAnswerMarkUpdate,
+      //attempt,
+      options : {
+        option1: 'Mahatma Gandhi',
+        option2: 'Jawaharlal Nehru',
+        option3: 'Donald Trump',
+        option4: 'Barrack Obama'
+      },
+      answer : 'Mahatma Gandhi'
+    },
+    {
+      key:5,
+      question:'Who is the father of the nation ?',
+      //correctAnswerMarkUpdate,
+      //attempt,
+      options : {
+        option1: 'Mahatma Gandhi',
+        option2: 'Jawaharlal Nehru',
+        option3: 'Donald Trump',
+        option4: 'Barrack Obama'
+      },
+      answer : 'Mahatma Gandhi'
+    },
+
+  ]
+  const [startFlag, setStartFlag] = useState(false);
+  const [resultFlag, setResultFlag] = useState(false);
+  const [buttonText, setButtonText] = useState('Start Quiz');
   const [questionsCorrect, setQuestionsCorrect] = useState(0);
-  const [selectedOptions, setSelectedOptions] = useState({});
+  const [answered, setAnswered] = useState(0);
 
-  const startTest = () => {
-    setQuestionsCorrect(0);
-    setSelectedOptions({});
-    setStart(true);
-  };
-
-  function func(questionId, correct) {
-    setSelectedOptions((prevOptions) => ({
-      ...prevOptions,
-      [questionId]: correct,
-    }));
-    if (correct === true) {
-      setQuestionsCorrect((prevCorrect) => prevCorrect + 1);
-    }
+  function handleStart()
+  {
+    setStartFlag(true);
+    setButtonText('Started');
   }
 
-  function showResults() {
-    setStart(false);
-    setEnd(true);
-  }
-
-  function checkAllQuestionsAnswered() {
-    for (const question of questions) {
-      if (!selectedOptions[question.questionId]) {
-        return false;
+  if(startFlag)
+  {
+    qCards = 
+    <div>
+      {
+        questionData.map((data) => 
+          <Card question= {data.question} options = {{
+            option1 : data.options.option1,
+            option2 : data.options.option2,
+            option3 : data.options.option3,
+            option4 : data.options.option4,
+          }} > </Card>)
       }
-    }
-    return true;
+    </div> 
+
+    startBtn = <></>;
   }
-
+  else
+  {
+    startBtn = <Button onClick = {handleStart}>Start Quiz</Button>;
+  }
+  
   return (
-    <div className="app">
-      <h1>Quizz App</h1>
-
-      {start ? (
-        <div className="container">
-          <div className="card-container">
-            {questions.map(
-              ({
-                questionId,
-                question,
-                option1,
-                option2,
-                option3,
-                option4,
-                answer,
-              }) => {
-                return (
-                  <Card
-                    key={questionId}
-                    question={question}
-                    correctAnswerMarkUpdate={(correct) => func(questionId, correct)}
-                    attempt={(correct) => func(questionId, correct)}
-                    options={{
-                      option1: option1,
-                      option2: option2,
-                      option3: option3,
-                      option4: option4,
-                    }}
-                    answer={answer}
-                  />
-                );
-              }
-            )}
-          </div>
-          {checkAllQuestionsAnswered() && <Button onClick={showResults}>{"Show results"}</Button>}
-        </div>
-      ) : (
-        <div className="end">
-          {end && <Banner>You have answered {questionsCorrect} / {questions.length} Correctly</Banner>}
-          <Button onClick={startTest}>{"Start Quiz"}</Button>
-        </div>
-      )}
+    <div className="App">
+      <h1>
+        Quizz App
+      </h1>
+      {qCards}
+      {startBtn}
     </div>
   );
 }
